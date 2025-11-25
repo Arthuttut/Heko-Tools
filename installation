@@ -1,0 +1,41 @@
+from pathlib import Path
+import requests
+import subprocess
+import winreg
+
+#Downloading and installing
+def install(url, nome_arquivo):
+    #downloading Steam Tools
+    downloadsFolder = Path.home() / "Downloads"
+    finalPath = downloadsFolder / nome_arquivo
+
+    print(f"Downloading to: {finalPath}")
+
+    content = requests.get(url).content
+
+    with open(finalPath, "wb") as f:
+        f.write(content)
+
+    print("File downloaded with exit!✅")
+    #installing steam tools
+    print('Installing...')
+    subprocess.run([finalPath], shell=True)
+    print('Alright✅')
+
+    print("Downloading and installing SteamBrew")
+
+    subprocess.run([
+        "powershell",
+        "-Command",
+        'iwr -useb "https://steambrew.app/install.ps1" | iex'
+    ], shell=True)
+    print("Installation completed! Your first Steam launch will take longer than usual while it sets up - don't close or interact with Steam during this process.")
+    try:
+        chave = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Valve\Steam")
+        caminho, _ = winreg.QueryValueEx(chave, "SteamExe")
+        subprocess.Popen(caminho)
+        print("Steam aberta com sucesso!")
+    except Exception as e:
+        print("Não consegui encontrar a Steam:", e)
+
+install("https://download2391.mediafire.com/8yriat84pobgzbBxhTifGZGqxdelSxv3ja-5iz2MaKmwYPI3b-y06OFeVbh11rNKdICJN9TGdJ1q4hQuvrpEen7UCDNdo9-5xTfO-VVzYnyHoH729y8WV5dBXCW-l9eaGI0qhIIHxMTy0u7zv7iLSoZoQgDDHHNIvsGeJ1zyztE_ZA/72wj64iv6xejw5n/st-setup-1.8.17r2.exe", "steamtools.exe")
